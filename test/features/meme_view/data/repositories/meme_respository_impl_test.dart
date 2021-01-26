@@ -47,8 +47,8 @@ void main() {
 
   group('getMemes', () {
     final tPage = 1;
-    final tMemeModel =
-        MemeModel(id: '1', imageUrl: 'test', upVotes: 0, downVotes: 0);
+    final tMemeModel = MemeModel(
+        id: '1', title: 'test', imageUrl: 'test', upVotes: 0, downVotes: 0);
     final Meme tMeme = tMemeModel;
     final tListMemeModel = [tMemeModel];
     final List<Meme> tListMeme = tListMemeModel;

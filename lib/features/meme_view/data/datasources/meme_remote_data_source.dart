@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
 import 'package:meme/features/meme_view/domain/entities/meme.dart';
 import 'package:http/http.dart' as http;
 
@@ -32,31 +33,7 @@ class MemeRemoteDataSourceImpl implements MemeRemoteDataSource {
 
   @override
   Future<List<Meme>> getMemes(int page) async {
-    httpClient.get(
-      'http://numbersapi.com/$page',
-      headers: {'Content-Type': 'applcation/json'},
-    );
-
-    return [
-      Meme(
-        id: '1',
-        imageUrl: '',
-        upVotes: 0,
-        downVotes: 0,
-      ),
-      Meme(
-        id: '2',
-        imageUrl: '',
-        upVotes: 0,
-        downVotes: 0,
-      ),
-      Meme(
-        id: '3',
-        imageUrl: '',
-        upVotes: 0,
-        downVotes: 0,
-      ),
-    ];
+    return null;
   }
 
   @override

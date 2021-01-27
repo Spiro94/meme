@@ -7,7 +7,16 @@ import '../../../../fixtures/fixture_reader.dart';
 
 void main() {
   final tMemeModel = MemeModel(
-      id: '1', title: 'test', imageUrl: 'test', upVotes: 0, downVotes: 0);
+    id: 'M1611620581',
+    category: 'funny',
+    title: 'PRIMER MEME',
+    imageUrl:
+        'https://i1.wp.com/www.materiagris.es/wp-content/uploads/2018/10/meme.jpg?resize=400%2C320&ssl=1',
+    upVotes: 5,
+    downVotes: 1,
+  );
+
+  final List<MemeModel> tListMemeModel = [tMemeModel];
 
   test('should be a subclass of Meme entity', () async {
     //assert
@@ -18,9 +27,13 @@ void main() {
       //arrange
       final Map<String, dynamic> jsonMap = json.decode(fixture('memes.json'));
       //act
-      final result = MemeModel.fromJson(jsonMap);
+      List<MemeModel> result = List();
+      for (var item in jsonMap['items']) {
+        result.add(MemeModel.fromJson(item));
+      }
+
       //assert
-      expect(result, tMemeModel);
+      expect(result, tListMemeModel);
     });
   });
   group('toJson', () {
@@ -31,11 +44,12 @@ void main() {
 
       //assert
       final expectedMap = {
-        "id": "1",
-        "title": "test",
-        "image_url": "test",
-        "up_votes": 0,
-        "down_votes": 0
+        'id': 'M1611620581',
+        'title': 'PRIMER MEME',
+        'imageUrl':
+            'https://i1.wp.com/www.materiagris.es/wp-content/uploads/2018/10/meme.jpg?resize=400%2C320&ssl=1',
+        'upVote': 5,
+        'downVote': 1
       };
       expect(result, expectedMap);
     });

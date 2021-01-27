@@ -5,12 +5,14 @@ class MemeModel extends Meme {
   MemeModel({
     @required String id,
     @required String title,
+    @required String category,
     @required String imageUrl,
     @required int upVotes,
     @required int downVotes,
   }) : super(
           id: id,
           title: title,
+          category: category,
           imageUrl: imageUrl,
           upVotes: upVotes,
           downVotes: downVotes,
@@ -20,9 +22,10 @@ class MemeModel extends Meme {
     return MemeModel(
       id: json['id'],
       title: json['title'],
-      imageUrl: json['image_url'],
-      upVotes: json['up_votes'],
-      downVotes: json['down_votes'],
+      category: json['category'],
+      imageUrl: json['imageUrl'],
+      upVotes: json['upVote'],
+      downVotes: json['downVote'],
     );
   }
 
@@ -30,9 +33,9 @@ class MemeModel extends Meme {
     return {
       "id": id,
       "title": title,
-      "image_url": imageUrl,
-      "up_votes": upVotes,
-      "down_votes": downVotes
+      "imageUrl": imageUrl,
+      "upVote": upVotes,
+      "downVote": downVotes
     };
   }
 }

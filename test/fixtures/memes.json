@@ -1,7 +1,12 @@
 {
-    "id": "1",
-    "title": "test",
-    "image_url": "test",
-    "up_votes": 0,
-    "down_votes": 0
+    "success": true,
+    "message": "ok",
+    "items": [{
+        "category": "funny",
+        "downVote": 1,
+        "imageUrl": "https://i1.wp.com/www.materiagris.es/wp-content/uploads/2018/10/meme.jpg?resize=400%2C320&ssl=1",
+        "id": "M1611620581",
+        "upVote": 5,
+        "title": "PRIMER MEME"
+    }]
 }

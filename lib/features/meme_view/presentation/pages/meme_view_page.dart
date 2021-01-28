@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:meme/features/meme_view/domain/usecases/get_memes.dart';
-import 'package:meme/injection_container.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../../../injection_container.dart';
+import '../../domain/entities/meme.dart';
+import '../../domain/usecases/get_memes.dart';
+import '../widgets/meme_container.dart';
 
 class MemeViewPage extends StatelessWidget {
   const MemeViewPage({Key key}) : super(key: key);
@@ -14,11 +18,30 @@ class MemeViewPage extends StatelessWidget {
       body: FutureBuilder(
         future: sl<GetMemes>().call(page: 1),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          return Center(
-            child: Container(
-              child: Text('!!!'),
-            ),
-          );
+          if (snapshot.connectionState == ConnectionState.done) {
+            Widget widget;
+            snapshot.data.fold((Failure err) {
+              widget = Center(
+                child: Container(
+                  child: Text('Error'),
+                ),
+              );
+            }, (List<Meme> data) {
+              widget = ListView.builder(
+                itemBuilder: (context, index) {
+                  return MemeContainer(
+                    meme: data[index],
+                  );
+                },
+                itemCount: data.length,
+              );
+            });
+            return widget;
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
         },
       ),
     );

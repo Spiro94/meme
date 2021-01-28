@@ -33,9 +33,10 @@ class MemeRemoteDataSourceImpl implements MemeRemoteDataSource {
   Future<bool> downVote(String id, String title) async {
     try {
       http.Response response = await httpClient.post(
-        BaseUrls.baseUrl + 'upVote',
-        headers: {'Content-Type': 'applcation/json'},
-        body: json.encode({'id': id, 'title': title}),
+        BaseUrls.baseUrl + 'downVote',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: {'id': id, 'title': title},
+        encoding: Encoding.getByName("utf-8"),
       );
       Map<String, dynamic> jsonBody = json.decode(response.body);
       if (jsonBody['success']) {
@@ -77,8 +78,9 @@ class MemeRemoteDataSourceImpl implements MemeRemoteDataSource {
     try {
       http.Response response = await httpClient.post(
         BaseUrls.baseUrl + 'upVote',
-        headers: {'Content-Type': 'applcation/json'},
-        body: json.encode({'id': id, 'title': title}),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: {'id': id, 'title': title},
+        encoding: Encoding.getByName("utf-8"),
       );
       Map<String, dynamic> jsonBody = json.decode(response.body);
       if (jsonBody['success']) {

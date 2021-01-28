@@ -18,10 +18,10 @@ class MemeRepositoryImpl implements MemeRepository {
   });
 
   @override
-  Future<bool> downVote(String id) async {
+  Future<bool> downVote(String id, String title) async {
     if (await networkInfo.isConnected) {
       try {
-        return await remoteDataSource.downVote(id);
+        return await remoteDataSource.downVote(id, title);
       } on ServerException {
         return false;
       }
@@ -44,10 +44,10 @@ class MemeRepositoryImpl implements MemeRepository {
   }
 
   @override
-  Future<bool> upVote(String id) async {
+  Future<bool> upVote(String id, String title) async {
     if (await networkInfo.isConnected) {
       try {
-        return await remoteDataSource.upVote(id);
+        return await remoteDataSource.upVote(id, title);
       } on ServerException {
         return false;
       }

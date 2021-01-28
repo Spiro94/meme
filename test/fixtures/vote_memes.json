@@ -1,0 +1,9 @@
+{
+    "success": true,
+    "message": "ok",
+    "result": {
+        "Attributes": {
+            "upVote": 5
+        }
+    }
+}

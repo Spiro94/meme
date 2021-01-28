@@ -37,7 +37,7 @@ void main() {
   }
 
   void runTestsOffline(Function body) {
-    group('device is online', () {
+    group('device is offline', () {
       setUp(() {
         when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
       });
@@ -48,8 +48,13 @@ void main() {
   group('getMemes', () {
     final tPage = 1;
     final tMemeModel = MemeModel(
-        id: '1', title: 'test', imageUrl: 'test', upVotes: 0, downVotes: 0);
-    final Meme tMeme = tMemeModel;
+        id: '1',
+        title: 'test',
+        category: 'funny',
+        imageUrl: 'test',
+        upVotes: 0,
+        downVotes: 0);
+
     final tListMemeModel = [tMemeModel];
     final List<Meme> tListMeme = tListMemeModel;
 
@@ -105,12 +110,13 @@ void main() {
 
   group('upVote', () {
     final String tId = '1';
+    final String tTitle = '1';
 
     test('should check if the device is online', () async {
       //arrange
       when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
       //act
-      repository.upVote(tId);
+      repository.upVote(tId, tTitle);
       //assert
       verify(mockNetworkInfo.isConnected);
     });
@@ -120,11 +126,12 @@ void main() {
           'should return remote data when the call to remote data source is successful',
           () async {
         //arrange
-        when(mockRemoteDataSource.upVote(any)).thenAnswer((_) async => true);
+        when(mockRemoteDataSource.upVote(any, any))
+            .thenAnswer((_) async => true);
         //act
-        final result = await repository.upVote(tId);
+        final result = await repository.upVote(tId, tTitle);
         //assert
-        verify(mockRemoteDataSource.upVote(tId));
+        verify(mockRemoteDataSource.upVote(tId, tTitle));
         expect(result, true);
       });
 
@@ -132,11 +139,12 @@ void main() {
           'should return false when the call to remote data source is unsuccessful',
           () async {
         //arrange
-        when(mockRemoteDataSource.upVote(any)).thenThrow(ServerException());
+        when(mockRemoteDataSource.upVote(any, any))
+            .thenThrow(ServerException());
         //act
-        final result = await repository.upVote(tId);
+        final result = await repository.upVote(tId, tTitle);
         //assert
-        verify(mockRemoteDataSource.upVote(tId));
+        verify(mockRemoteDataSource.upVote(tId, tTitle));
         expect(result, false);
       });
     });
@@ -144,9 +152,10 @@ void main() {
     runTestsOffline(() {
       test('should return server exception', () async {
         //arrange
-        when(mockRemoteDataSource.upVote(any)).thenAnswer((_) async => true);
+        when(mockRemoteDataSource.upVote(any, any))
+            .thenAnswer((_) async => true);
         //act
-        final result = await repository.upVote(tId);
+        final result = await repository.upVote(tId, tTitle);
         //assert
         verifyZeroInteractions(mockRemoteDataSource);
         expect(result, false);
@@ -156,12 +165,13 @@ void main() {
 
   group('downVote', () {
     final String tId = '1';
+    final String tTitle = '1';
 
     test('should check if the device is online', () async {
       //arrange
       when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
       //act
-      repository.downVote(tId);
+      repository.downVote(tId, tTitle);
       //assert
       verify(mockNetworkInfo.isConnected);
     });
@@ -171,11 +181,12 @@ void main() {
           'should return remote data when the call to remote data source is successful',
           () async {
         //arrange
-        when(mockRemoteDataSource.downVote(any)).thenAnswer((_) async => true);
+        when(mockRemoteDataSource.downVote(any, any))
+            .thenAnswer((_) async => true);
         //act
-        final result = await repository.downVote(tId);
+        final result = await repository.downVote(tId, tTitle);
         //assert
-        verify(mockRemoteDataSource.downVote(tId));
+        verify(mockRemoteDataSource.downVote(tId, tTitle));
         expect(result, true);
       });
 
@@ -183,11 +194,12 @@ void main() {
           'should return false when the call to remote data source is unsuccessful',
           () async {
         //arrange
-        when(mockRemoteDataSource.downVote(any)).thenThrow(ServerException());
+        when(mockRemoteDataSource.downVote(any, any))
+            .thenThrow(ServerException());
         //act
-        final result = await repository.downVote(tId);
+        final result = await repository.downVote(tId, tTitle);
         //assert
-        verify(mockRemoteDataSource.downVote(tId));
+        verify(mockRemoteDataSource.downVote(tId, tTitle));
         expect(result, false);
       });
     });
@@ -195,9 +207,10 @@ void main() {
     runTestsOffline(() {
       test('should return server exception', () async {
         //arrange
-        when(mockRemoteDataSource.downVote(any)).thenAnswer((_) async => true);
+        when(mockRemoteDataSource.downVote(any, any))
+            .thenAnswer((_) async => true);
         //act
-        final result = await repository.downVote(tId);
+        final result = await repository.downVote(tId, tTitle);
         //assert
         verifyZeroInteractions(mockRemoteDataSource);
         expect(result, false);

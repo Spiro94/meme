@@ -17,7 +17,14 @@ void main() {
   });
   final int tPage = 1;
   final List<Meme> tMemes = [
-    Meme(id: '1', title: 'test', imageUrl: 'urlTest', upVotes: 0, downVotes: 0)
+    Meme(
+      id: '1',
+      category: 'funny',
+      title: 'test',
+      imageUrl: 'urlTest',
+      upVotes: 0,
+      downVotes: 0,
+    ),
   ];
 
   test('should get a page of Memes from the repository', () async {

@@ -8,7 +8,7 @@ class DownVote implements UseCase<Future<bool>, String> {
   DownVote(this.repository);
 
   @override
-  Future<bool> call({@required String id}) async {
-    return await repository.downVote(id);
+  Future<bool> call({@required String id, @required String title}) async {
+    return await repository.downVote(id, title);
   }
 }

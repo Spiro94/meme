@@ -11,7 +11,7 @@ abstract class MemeRemoteDataSource {
   ///Calls the downVote endpoint
   ///
   ///Throws a [ServerException] for all error codes
-  Future<bool> downVote(String id);
+  Future<bool> downVote(String id, String title);
 
   ///Calls the getMemes endpoint
   ///
@@ -21,7 +21,7 @@ abstract class MemeRemoteDataSource {
   ///Calls the upVote endpoint
   ///
   ///Throws a [ServerException] for all error codes
-  Future<bool> upVote(String id);
+  Future<bool> upVote(String id, String title);
 }
 
 class MemeRemoteDataSourceImpl implements MemeRemoteDataSource {
@@ -30,8 +30,23 @@ class MemeRemoteDataSourceImpl implements MemeRemoteDataSource {
   MemeRemoteDataSourceImpl(this.httpClient);
 
   @override
-  Future<bool> downVote(String id) {
-    return Future.value(true);
+  Future<bool> downVote(String id, String title) async {
+    try {
+      http.Response response = await httpClient.post(
+        BaseUrls.baseUrl + 'upVote',
+        headers: {'Content-Type': 'applcation/json'},
+        body: json.encode({'id': id, 'title': title}),
+      );
+      Map<String, dynamic> jsonBody = json.decode(response.body);
+      if (jsonBody['success']) {
+        return true;
+      } else {
+        throw ServerException();
+      }
+    } catch (e) {
+      print(e);
+      throw ServerException();
+    }
   }
 
   @override
@@ -58,7 +73,22 @@ class MemeRemoteDataSourceImpl implements MemeRemoteDataSource {
   }
 
   @override
-  Future<bool> upVote(String id) {
-    return Future.value(true);
+  Future<bool> upVote(String id, String title) async {
+    try {
+      http.Response response = await httpClient.post(
+        BaseUrls.baseUrl + 'upVote',
+        headers: {'Content-Type': 'applcation/json'},
+        body: json.encode({'id': id, 'title': title}),
+      );
+      Map<String, dynamic> jsonBody = json.decode(response.body);
+      if (jsonBody['success']) {
+        return true;
+      } else {
+        throw ServerException();
+      }
+    } catch (e) {
+      print(e);
+      throw ServerException();
+    }
   }
 }

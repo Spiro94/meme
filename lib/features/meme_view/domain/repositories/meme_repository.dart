@@ -5,6 +5,6 @@ import '../entities/meme.dart';
 
 abstract class MemeRepository {
   Future<Either<Failure, List<Meme>>> getMemes(int page);
-  Future<bool> downVote(String id);
-  Future<bool> upVote(String id);
+  Future<bool> downVote(String id, String title);
+  Future<bool> upVote(String id, String title);
 }

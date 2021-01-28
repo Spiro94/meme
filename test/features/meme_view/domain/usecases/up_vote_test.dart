@@ -14,15 +14,19 @@ void main() {
     usecase = UpVote(mockMemeRepository);
   });
   final String tId = '1';
+  final String tTitle = '1';
 
   test('should upvote a meme', () async {
     //arrange
-    when(mockMemeRepository.upVote(any)).thenAnswer((_) async => true);
+    when(mockMemeRepository.upVote(any, any)).thenAnswer((_) async => true);
     //act
-    final result = await usecase(id: tId);
+    final result = await usecase(
+      id: tId,
+      title: tTitle,
+    );
     //assert
     expect(result, true);
-    verify(mockMemeRepository.upVote(tId));
+    verify(mockMemeRepository.upVote(tId, tTitle));
     verifyNoMoreInteractions(mockMemeRepository);
   });
 }

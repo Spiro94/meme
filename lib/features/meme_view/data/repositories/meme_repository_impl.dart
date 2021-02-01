@@ -31,10 +31,14 @@ class MemeRepositoryImpl implements MemeRepository {
   }
 
   @override
-  Future<Either<Failure, List<Meme>>> getMemes(int page) async {
+  Future<Either<Failure, List<Meme>>> getMemes(
+    int pageSize,
+    String id,
+    String title,
+  ) async {
     if (await networkInfo.isConnected) {
       try {
-        return Right(await remoteDataSource.getMemes(page));
+        return Right(await remoteDataSource.getMemes(pageSize, id, title));
       } on ServerException {
         return Left(ServerFailure());
       }

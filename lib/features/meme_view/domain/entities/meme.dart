@@ -1,13 +1,12 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-class Meme extends Equatable {
+class Meme {
   final String id;
   final String title;
   final String imageUrl;
-  final String category;
-  final int upVotes;
-  final int downVotes;
+  String category;
+  int upVotes;
+  int downVotes;
 
   Meme({
     @required this.id,
@@ -17,7 +16,4 @@ class Meme extends Equatable {
     @required this.upVotes,
     @required this.downVotes,
   });
-
-  @override
-  List<Object> get props => [id, title, category, imageUrl, upVotes, downVotes];
 }

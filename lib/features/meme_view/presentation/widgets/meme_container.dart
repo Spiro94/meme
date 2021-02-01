@@ -61,7 +61,10 @@ class _MemeContainerState extends State<MemeContainer> {
                         id: widget.meme.id,
                         title: widget.meme.title,
                       );
-                      if (response) upVotes++;
+                      if (response) {
+                        upVotes++;
+                        widget.meme.upVotes++;
+                      }
                       setState(() {});
                     },
                   ),
@@ -80,7 +83,11 @@ class _MemeContainerState extends State<MemeContainer> {
                         id: widget.meme.id,
                         title: widget.meme.title,
                       );
-                      if (response) downVotes++;
+                      if (response) {
+                        downVotes++;
+                        widget.meme.downVotes++;
+                      }
+
                       setState(() {});
                     },
                   ),

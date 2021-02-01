@@ -7,9 +7,18 @@ class MemeViewPresenter {
 
   MemeViewPresenter(this._interface);
 
-  Future<void> getMemes(int page) async {
+  Future<void> getMemes(
+    int page,
+    String id,
+    String title,
+  ) async {
     _interface.showLoading();
-    final response = await sl<GetMemes>().call(page: page);
+    final response = await sl<GetMemes>().call(
+      page: page,
+      id: id,
+      title: title,
+    );
+    print('page $page');
 
     response.fold((err) {
       _interface.showError();

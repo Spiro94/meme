@@ -53,6 +53,8 @@ void main() {
 
   group('getMemes', () {
     final int tPage = 1;
+    final String tId = '1';
+    final String tTitle = '1';
     final Map<String, dynamic> jsonMap = json.decode(fixture('memes.json'));
     final List<MemeModel> tMemeModelList = List();
 
@@ -64,7 +66,7 @@ void main() {
       //arrange
       setUpHttpClientSuccess();
       //act
-      dataSource.getMemes(tPage);
+      dataSource.getMemes(tPage, tId, tTitle);
       //assert
       verify(mockHttpClient.get(
         BaseUrls.baseUrl + 'memes',
@@ -77,7 +79,7 @@ void main() {
       //arrange
       setUpHttpClientSuccess();
       //act
-      final result = await dataSource.getMemes(tPage);
+      final result = await dataSource.getMemes(tPage, tId, tTitle);
       //assert
       expect(result, tMemeModelList);
     });
@@ -89,7 +91,7 @@ void main() {
       //act
       final call = dataSource.getMemes;
       //assert
-      expect(() => call(tPage), throwsA(isA<ServerException>()));
+      expect(() => call(tPage, tId, tTitle), throwsA(isA<ServerException>()));
     });
   });
 

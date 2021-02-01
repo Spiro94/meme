@@ -16,6 +16,8 @@ void main() {
     usecase = GetMemes(mockMemeRepository);
   });
   final int tPage = 1;
+  final String tId = '1';
+  final String tTitle = '1';
   final List<Meme> tMemes = [
     Meme(
       id: '1',
@@ -29,13 +31,17 @@ void main() {
 
   test('should get a page of Memes from the repository', () async {
     //arrange
-    when(mockMemeRepository.getMemes(any))
+    when(mockMemeRepository.getMemes(any, any, any))
         .thenAnswer((_) async => Right(tMemes));
     //act
-    final result = await usecase(page: tPage);
+    final result = await usecase(
+      page: tPage,
+      id: tId,
+      title: tTitle,
+    );
     //assert
     expect(result, Right(tMemes));
-    verify(mockMemeRepository.getMemes(tPage));
+    verify(mockMemeRepository.getMemes(tPage, tId, tTitle));
     verifyNoMoreInteractions(mockMemeRepository);
   });
 }

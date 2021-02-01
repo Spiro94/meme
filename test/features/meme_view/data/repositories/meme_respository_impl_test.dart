@@ -47,6 +47,8 @@ void main() {
 
   group('getMemes', () {
     final tPage = 1;
+    final tId = '1';
+    final tTitle = '1';
     final tMemeModel = MemeModel(
         id: '1',
         title: 'test',
@@ -62,7 +64,7 @@ void main() {
       //arrange
       when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
       //act
-      repository.getMemes(tPage);
+      repository.getMemes(tPage, tId, tTitle);
       //assert
       verify(mockNetworkInfo.isConnected);
     });
@@ -72,12 +74,12 @@ void main() {
           'should return remote data when the call to remote data source is successful',
           () async {
         //arrange
-        when(mockRemoteDataSource.getMemes(any)).thenAnswer(
+        when(mockRemoteDataSource.getMemes(any, any, any)).thenAnswer(
             (_) async => tListMeme); //The repository return entities not models
         //act
-        final result = await repository.getMemes(tPage);
+        final result = await repository.getMemes(tPage, tId, tTitle);
         //assert
-        verify(mockRemoteDataSource.getMemes(tPage));
+        verify(mockRemoteDataSource.getMemes(tPage, tId, tTitle));
         expect(result, Right(tListMemeModel));
       });
 
@@ -85,11 +87,12 @@ void main() {
           'should return server failure when the call to remote data source is unsuccessful',
           () async {
         //arrange
-        when(mockRemoteDataSource.getMemes(any)).thenThrow(ServerException());
+        when(mockRemoteDataSource.getMemes(any, any, any))
+            .thenThrow(ServerException());
         //act
-        final result = await repository.getMemes(tPage);
+        final result = await repository.getMemes(tPage, tId, tTitle);
         //assert
-        verify(mockRemoteDataSource.getMemes(tPage));
+        verify(mockRemoteDataSource.getMemes(tPage, tId, tTitle));
         expect(result, Left(ServerFailure()));
       });
     });
@@ -97,10 +100,10 @@ void main() {
     runTestsOffline(() {
       test('should return server exception', () async {
         //arrange
-        when(mockRemoteDataSource.getMemes(any)).thenAnswer(
+        when(mockRemoteDataSource.getMemes(any, any, any)).thenAnswer(
             (_) async => tListMeme); //The repository return entities not models
         //act
-        final result = await repository.getMemes(tPage);
+        final result = await repository.getMemes(tPage, tId, tTitle);
         //assert
         verifyZeroInteractions(mockRemoteDataSource);
         expect(result, Left(ServerFailure()));

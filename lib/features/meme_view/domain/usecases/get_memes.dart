@@ -12,7 +12,15 @@ class GetMemes implements UseCase<Future<Either<Failure, List<Meme>>>, int> {
   GetMemes(this.repository);
 
   @override
-  Future<Either<Failure, List<Meme>>> call({@required int page}) async {
-    return await repository.getMemes(page);
+  Future<Either<Failure, List<Meme>>> call({
+    @required int page,
+    @required String id,
+    @required String title,
+  }) async {
+    return await repository.getMemes(
+      page,
+      id,
+      title,
+    );
   }
 }

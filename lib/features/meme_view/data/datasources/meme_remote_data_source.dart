@@ -16,7 +16,7 @@ abstract class MemeRemoteDataSource {
   ///Calls the getMemes endpoint
   ///
   ///Throws a [ServerException] for all error codes
-  Future<List<Meme>> getMemes(int page);
+  Future<List<Meme>> getMemes(int pageSize, String id, String title);
 
   ///Calls the upVote endpoint
   ///
@@ -51,13 +51,19 @@ class MemeRemoteDataSourceImpl implements MemeRemoteDataSource {
   }
 
   @override
-  Future<List<MemeModel>> getMemes(int page) async {
+  Future<List<MemeModel>> getMemes(
+      int pageSize, String id, String title) async {
     List<MemeModel> list = List();
 
     try {
-      http.Response response = await httpClient.get(
+      http.Response response = await httpClient.post(
         BaseUrls.baseUrl + 'memes',
-        headers: {'Content-Type': 'applcation/json'},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: {
+          'pageSize': pageSize,
+          'id': id,
+        },
+        encoding: Encoding.getByName("utf-8"),
       );
       Map<String, dynamic> jsonBody = json.decode(response.body);
       if (jsonBody['success']) {
